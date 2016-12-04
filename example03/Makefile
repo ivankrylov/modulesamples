@@ -1,10 +1,12 @@
-JAVA_HOME=/Users/ivan/openjdk9_build/images/jdk-bundle/jdk-9.jdk/Contents/Home/
+JAVA_HOME=/Users/ivan/openjdk9_build/images/jdk-bundle/jdk-9.jdk/Contents/Home
 PATH=${JAVA_HOME}/bin
 
 JAR=jar
 JAVA=java
 JAVAC=javac
-JMOD=jmod
+JMOD=${JAVA_HOME}/bin/jmod
+JLINK=${JAVA_HOME}/bin/jlink
+MODDIR=${JAVA_HOME}/jmods
 
 all: show
 
@@ -56,5 +58,34 @@ jarshow: module1jar module2jar
 	@echo == Time to Run jars! ==
 	${JAVA} -p mlib -m com.azul.modules.module2
 
+module1jmod: module1
+	@echo == Make first jmod ==
+	mkdir -p jmod
+	${JMOD} create --module-path target/com.azul.modules.module1 --class-path target/com.azul.modules.module1  jmod/module1.jmod
+
+module2jmod: module2
+	echo == Make second jmod ==
+	mkdir -p jmod
+	${JMOD} create --module-path target/com.azul.modules.module2 --class-path target/com.azul.modules.module2 jmod/module2.jmod
+
+Example03: module1
+	${JAVAC} --module-path target --add-modules com.azul.modules.module1  -d onlyExample Example03.java
+
+image: module1jmod module2jmod
+	@echo == What is in jmod ==
+	@tree jmod
+	@echo == What is in system jmod ==
+	@tree ${MODDIR}
+	rm -rf image
+	${JLINK} --module-path ${MODDIR}:jmod --add-modules com.azul.modules.module1 --add-modules com.azul.modules.module2  --output image
+	@echo == What is in image ==
+	@tree image
+
+showimage: Example03 image
+	@echo == What is in onlyExample ==
+	@tree onlyExample
+	@echo == Time to Run Example03! ==
+	image/bin/java -cp onlyExample  Example03
+
 clean:
-	rm -rf mlib target
+	rm -rf mlib target image jmod onlyExample
