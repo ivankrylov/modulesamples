@@ -30,9 +30,9 @@ run: compile
 	${JAVA} -cp .:path1.jar:path2.jar Example02
 
 show: compile
-	cat path1/src/com.azul.test/A.java
-	cat path2/src/com.azul.test/A.java
-	cat ./Example01.java
+	pygmentize -g path1/src/com.azul.test/A.java
+	pygmentize -g path2/src/com.azul.test/A.java
+	pygmentize -g ./Example01.java
 	${JAVA} -cp .:path1.jar:path2.jar Example01
 	${JAVA} -cp .:path2.jar:path1.jar Example01
 
