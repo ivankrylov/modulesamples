@@ -17,21 +17,21 @@ module1:
 	@tree com.azul.modules.module1
 	@echo == Let\'s compile ==
 	${JAVAC} --module-source-path .  -d target com.azul.modules.module1/module-info.java
-	${JAVAC} --module-source-path .  -d target com.azul.modules.module1/com/azul/testpackage1/A.java
+	${JAVAC} --module-source-path .  -d target com.azul.modules.module1/com/azul/testpackage/A.java
 
 module2:
 	@echo == What is in com.azul.modules.module2 ==
 	@tree com.azul.modules.module2
 	@echo == Let\'s compile ==
 	${JAVAC} --module-source-path .  -d target com.azul.modules.module2/module-info.java
-	${JAVAC} --module-source-path .  -d target com.azul.modules.module2/com/azul/testpackage2/A.java
+	${JAVAC} --module-source-path .  -d target com.azul.modules.module2/com/azul/testpackage/A.java
 
 moduleMain:
 	@echo == What is in com.azul.modules.moduleMain ==
 	@tree com.azul.modules.moduleMain
 	@echo == Let\'s compile ==
 	${JAVAC} --module-source-path .  -d target com.azul.modules.moduleMain/module-info.java
-	${JAVAC} --module-source-path .  -d target com.azul.modules.moduleMain/com/azul/runpackage2/Example04.java
+	${JAVAC} --module-source-path .  -d target com.azul.modules.moduleMain/com/azul/runpackage/Example04.java
 
 module1jar: module1
 	mkdir -p mlib
@@ -51,13 +51,13 @@ run: compile
 show: compile
 	echo == Listing of source files ==
 	pygmentize -g com.azul.modules.module1/module-info.java
-	pygmentize -g com.azul.modules.module1/com/azul/testpackage1/A.java
+	pygmentize -g com.azul.modules.module1/com/azul/testpackage/A.java
 	pygmentize -g com.azul.modules.module2/module-info.java
-	pygmentize -g com.azul.modules.module2/com/azul/testpackage2/A.java
+	pygmentize -g com.azul.modules.module2/com/azul/testpackage/A.java
 	@echo == What is in target ==
 	@tree mlib
 	echo == Time to Run! ==
-	${JAVA} -p target -m com.azul.modules.module2/com.azul.testpackage2.A
+	${JAVA} -p target -m com.azul.modules.module2/com.azul.testpackage.A
 
 jarshow: module1jar module2jar moduleMainjar
 	@echo == What is in mlib ==

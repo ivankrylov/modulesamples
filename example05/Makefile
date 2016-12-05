@@ -1,9 +1,9 @@
 JAVA_HOME=/Users/ivan/openjdk9_build/images/jdk-bundle/jdk-9.jdk/Contents/Home
 PATH=${JAVA_HOME}/bin
 
-JAR=jar
-JAVA=java
-JAVAC=javac
+JAR=${JAVA_HOME}/bin/jar
+JAVA=${JAVA_HOME}/bin/java
+JAVAC=${JAVA_HOME}/bin/javac
 JMOD=${JAVA_HOME}/bin/jmod
 JLINK=${JAVA_HOME}/bin/jlink
 MODDIR=${JAVA_HOME}/jmods
@@ -26,12 +26,13 @@ module2:
 	${JAVAC} --module-source-path .  -d target com.azul.modules.module2/module-info.java
 	${JAVAC} --module-source-path .  -d target com.azul.modules.module2/com/azul/testpackage/A.java
 
-moduleMain:
+moduleMain: module1 module2
 	@echo == What is in com.azul.modules.moduleMain ==
 	@tree com.azul.modules.moduleMain
+	echo ${JAVAC}
 	@echo == Let\'s compile ==
-	${JAVAC} --module-source-path .  -d target com.azul.modules.moduleMain/module-info.java
-	${JAVAC} --module-source-path .  -d target com.azul.modules.moduleMain/com/azul/runpackage/Example05.java
+	${JAVAC} -p ${MODDIR}:/Users/ivan/mygithub/modulesamples/example05/target -d target/com.azul.modules.moduleMain com.azul.modules.moduleMain/module-info.java
+	${JAVAC} -p ${MODDIR}:/Users/ivan/mygithub/modulesamples/example05/target -d target/com.azul.modules.moduleMain com.azul.modules.moduleMain/com/azul/runpackage/Example05.java
 
 module1jar: module1
 	mkdir -p mlib
@@ -41,7 +42,7 @@ module2jar: module2
 	mkdir -p mlib
 	${JAR} --create --file=mlib/module2.jar -C target/com.azul.modules.module2 .
 
-moduleMainjar: moduleMain
+moduleMainjar: module1jar module2jar moduleMain
 	mkdir -p mlib
 	${JAR} --create --file=mlib/moduleMain.jar --main-class=com.azul.runpackage.Example05 -C target/com.azul.modules.moduleMain .
 
