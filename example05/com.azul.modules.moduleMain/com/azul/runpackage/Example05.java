@@ -39,42 +39,52 @@ public class Example05 {
     private static final Path MODS_DIR = Paths.get("target");
     private static final Set<String> modules = Set.of(
       "com.azul.modules.module1","com.azul.modules.module2");
+      private static Object o=new Object();
 
     public static void main(String[] args) throws Exception {
-        // disable security manager until Class.forName is called.
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null) {
-            System.setSecurityManager(null);
-        }
-
         ModuleFinder finder = ModuleFinder.of(MODS_DIR);
 
         Configuration parent = Layer.boot().configuration();
         Configuration cf = parent.resolveRequiresAndUses(ModuleFinder.of(),
                                                          finder,
                                                          modules);
-
         ClassLoader scl = ClassLoader.getSystemClassLoader();
         Layer layer = Layer.boot().defineModulesWithManyLoaders(cf, scl);
 
         Module m1 = layer.findModule("com.azul.modules.module1").get();
         Module m2 = layer.findModule("com.azul.modules.module2").get();
 
-        if (sm != null) {
-            System.setSecurityManager(sm);
-        }
-
         // find exported and non-exported class from a named module
         Class<?> c1 = findClass(m1, "com.azul.testpackage.A");
         Class<?> c2 = findClass(m2, "com.azul.testpackage.A");
 
-        Class[] sig = new Class[1];
-        sig[0] = Void.class;
         Method mtd1 = c1.getDeclaredMethod("m", null);
         Method mtd2 = c2.getDeclaredMethod("m", null);
-        Object o=new Object();
         mtd1.invoke(o);
         mtd2.invoke(o);
+
+        ClassLoader cLoader = c1.getClassLoader();
+        if (cLoader == null) {
+           System.out.println("The default system class was used.");
+        }
+        else {
+           // returns the class loader
+           Class loaderClass = cLoader.getClass();
+           System.out.println("Class associated with ClassLoader = " +
+           loaderClass.getName() + ". toString = " + cLoader.toString());
+        }
+
+        cLoader = c2.getClassLoader();
+
+        if (cLoader == null) {
+           System.out.println("The default system class was used.");
+        }
+        else {
+           // returns the class loader
+           Class loaderClass = cLoader.getClass();
+           System.out.println("Class associated with ClassLoader = " +
+           loaderClass.getName() + ". toString = " + cLoader.toString());
+        }
     }
 
     static Class<?> findClass(Module module, String cn) {
