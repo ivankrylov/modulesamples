@@ -22,6 +22,13 @@
  */
 
  // Derived from jdk/test//java/lang/Class/forName/modules/TestLayer.java
+ /*
+  * Example5 for the Java 9 talk
+  *
+  * (c)2016, Ivan Krylov
+  *
+  */
+  
 package com.azul.runpackage;
 
 import java.lang.module.Configuration;

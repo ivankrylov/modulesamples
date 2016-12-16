@@ -1,3 +1,10 @@
+#
+# Example5 for the Java 9 talk
+#
+# (c)2016, Ivan Krylov
+#
+#
+
 JAVA_HOME=/Users/ivan/openjdk9_build/images/jdk-bundle/jdk-9.jdk/Contents/Home
 PATH=${JAVA_HOME}/bin
 
@@ -49,18 +56,7 @@ moduleMainjar: module1jar module2jar moduleMain
 run: compile
 	${JAVA} -p target -m com.azul.modules.module2/com.azul.testpackage2.A
 
-show: compile
-	echo == Listing of source files ==
-	pygmentize -g com.azul.modules.module1/module-info.java
-	pygmentize -g com.azul.modules.module1/com/azul/testpackage1/A.java
-	pygmentize -g com.azul.modules.module2/module-info.java
-	pygmentize -g com.azul.modules.module2/com/azul/testpackage2/A.java
-	@echo == What is in target ==
-	@tree mlib
-	echo == Time to Run! ==
-	${JAVA} -p target -m com.azul.modules.module2/com.azul.testpackage2.A
-
-jarshow: module1jar module2jar moduleMainjar
+jarshow: compile module1jar module2jar moduleMainjar
 	@echo == What is in mlib ==
 	@tree mlib
 	@echo == Time to Run jars! ==

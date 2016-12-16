@@ -1,3 +1,10 @@
+#
+# Example1 for the Java 9 talk
+#
+# (c)2016, Ivan Krylov
+#
+#
+
 JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home
 
 JAR=${JAVA_HOME}/bin/jar

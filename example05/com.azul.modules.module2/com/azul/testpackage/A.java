@@ -1,4 +1,10 @@
-package com.azul.testpackage;
+/*
+ * Example5 for the Java 9 talk
+ *
+ * (c)2016, Ivan Krylov
+ *
+ */
+ package com.azul.testpackage;
 
 public class A
 {

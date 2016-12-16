@@ -1,9 +1,16 @@
+#
+# Example4 for the Java 9 talk
+#
+# (c)2016, Ivan Krylov
+#
+#
+
 JAVA_HOME=/Users/ivan/openjdk9_build/images/jdk-bundle/jdk-9.jdk/Contents/Home
 PATH=${JAVA_HOME}/bin
 
-JAR=jar
-JAVA=java
-JAVAC=javac
+JAR=${JAVA_HOME}/bin/jar
+JAVA=${JAVA_HOME}/bin/java
+JAVAC=${JAVA_HOME}/bin/javac
 JMOD=${JAVA_HOME}/bin/jmod
 JLINK=${JAVA_HOME}/bin/jlink
 MODDIR=${JAVA_HOME}/jmods

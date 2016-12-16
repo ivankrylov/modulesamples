@@ -1,3 +1,9 @@
+/*
+ * Example1 for the Java 9 talk
+ *
+ * (c)2016, Ivan Krylov
+ *
+ */
 package com.azul.test;
 
 public class A {

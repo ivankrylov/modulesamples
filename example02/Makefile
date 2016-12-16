@@ -1,3 +1,11 @@
+#
+# Example2 for the Java 9 talk
+#
+# (c)2016, Ivan Krylov
+#
+#
+
+
 JAVA_HOME=/Users/ivan/openjdk9_build/images/jdk-bundle/jdk-9.jdk/Contents/Home/
 PATH=${JAVA_HOME}/bin
 
